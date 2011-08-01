@@ -17,7 +17,7 @@ Jeweler::Tasks.new do |gem|
   gem.name = "scalable-plot"
   gem.homepage = "http://github.com/cschwartz/scalable-plot"
   gem.license = "MIT"
-  gem.summary = %Q{TODO: one-line summary of your gem}
+  gem.summary = %Q{A gem for generating plots using the svg format.}
   gem.description = %Q{TODO: longer description of your gem}
   gem.email = "christian@schwartz-raum.de"
   gem.authors = ["Christian Schwartz"]
@@ -36,9 +36,22 @@ RSpec::Core::RakeTask.new(:rcov) do |spec|
   spec.rcov = true
 end
 
+require 'reek/rake/task'
+Reek::Rake::Task.new do |t|
+  t.fail_on_error = true
+  t.verbose = false
+  t.source_files = 'lib/**/*.rb'
+end
+
+require 'roodi'
+require 'roodi_task'
+RoodiTask.new do |t|
+  t.verbose = false
+end
+
 task :default => :spec
 
-require 'rake/rdoctask'
+require 'rake/task'
 Rake::RDocTask.new do |rdoc|
   version = File.exist?('VERSION') ? File.read('VERSION') : ""
 
